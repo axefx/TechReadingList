@@ -16,4 +16,18 @@ class BookController {
         let booksUrl = documentsDir?.appendingPathComponent("ReadingList.plist")
         return booksUrl
     }
+    
+    func saveToPersistentStore(){
+        let encoder = PropertyListEncoder()
+        do {
+            let booksData = try encoder.encode(books)
+            guard let readingListURL = readingListURL else {
+                return
+            }
+            try booksData.write(to: readingListURL)
+        } catch {
+            print("Error saving: \(error)")
+        }
+    }
+    
 }
